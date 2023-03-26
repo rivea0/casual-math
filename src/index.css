@@ -34,17 +34,18 @@ body {
 
 #options {
   display: grid;
-  grid-row-gap: 2rem;
   background-color: #5F6487;
 }
 
 .option {
   font-size: 2rem;
-  border: 1px solid transparent;
+  padding: 12px;
+  border: 1px solid #4a4e69;
 }
 
 .option:hover {
   border-bottom: 1px solid #c9ada7;
+  cursor: pointer;
 }
 
 .calc-area {
@@ -52,8 +53,25 @@ body {
   grid-row-gap: 2rem;
 }
 
+/*
 .text, .calculator {
   border: 1px solid red;
+} */
+
+.text {
+  background-color: rgba(113, 125, 155, 30%);
+}
+
+.text-input {
+  background-color: inherit;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  width: 100%;
+}
+
+.calculator {
+  background-color: #5F6487;
 }
 
 /* 

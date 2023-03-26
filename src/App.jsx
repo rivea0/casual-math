@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Options from './components/Options';
 import Text from './components/Text';
 import Calculator from './components/Calculator';
+import Footer from './components/Footer';
 import './App.css';
 
 export default function App() {
@@ -16,7 +17,7 @@ export default function App() {
           <Calculator />
         </div>
       </div>
-
+      <Footer />
     </div>
   )
 }
