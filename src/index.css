@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Serif:wght@200;300&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -7,16 +9,18 @@ body {
   background-color: #4a4e69;
   padding: 8px;
   color: white;
+  font-family: 'Roboto Serif', serif;
 }
 
 .App {
   display: grid;
   grid-template-rows: 1fr 5fr 1fr;
-
+  padding: 12px;
 }
 
 .header {
   display: flex;
+  font-family: 'Montserrat', sans-serif;
 
 }
 
@@ -35,11 +39,12 @@ body {
 #options {
   display: grid;
   background-color: #5F6487;
+  font-weight: 200;
 }
 
 .option {
-  font-size: 2rem;
-  padding: 12px;
+  font-size: 1.75rem;
+  padding: 16px;
   border: 1px solid #4a4e69;
 }
 
@@ -53,13 +58,9 @@ body {
   grid-row-gap: 2rem;
 }
 
-/*
-.text, .calculator {
-  border: 1px solid red;
-} */
-
 .text {
   background-color: rgba(113, 125, 155, 30%);
+  height: 100%;
 }
 
 .text-input {
@@ -68,11 +69,195 @@ body {
   color: white;
   font-size: 2rem;
   width: 100%;
+  box-sizing: border-box;
+  padding: 8px 0 4px 12px;
 }
 
 .calculator {
   background-color: #5F6487;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  font-weight: 300;
 }
+
+.calculator > * {
+  width: 100%;
+  border: .05rem solid #4a4e69;
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+}
+
+.calculator > *:hover {
+  border: .05rem solid #c9ada7;
+  cursor: pointer;
+}
+
+.role-big {
+  grid-column:  1 / span 2;
+}
+
+.role-big2 {
+  grid-column: 3 / span 2;
+}
+
+.role-small {
+  grid-row: 2 / span 1;
+  grid-column: 1 / span 1;
+}
+
+.role-small2 {
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+}
+
+.role-small3 {
+  grid-row: 2 / span 1;
+  grid-column: 3 / span 1;
+}
+
+.role-small4 {
+  grid-row: 2 / span 1;
+  grid-column: 4 / span 1;
+}
+.role-small5 {
+  grid-row: 3 / span 1;
+  grid-column: 1 / span 1;
+}
+.role-small6 {
+  grid-row: 3 / span 1;
+  grid-column: 2 / span 1;
+}
+.role-small7 {
+  grid-row: 3 / span 1;
+  grid-column: 3 / span 1;
+}
+
+.role-small8 {
+  grid-row: 3 / span 1;
+  grid-column: 4 / span 1;
+}
+
+.role-small9 {
+  grid-row: 4 / span 1;
+  grid-column: 1 / span 1;
+}
+
+.role-small10 {
+  grid-row: 4 / span 1;
+  grid-column: 2 / span 1;
+}
+
+.role-small11 {
+  grid-row: 4 / span 1;
+  grid-column: 3 / span 1;
+}
+
+.role-small12 {
+  grid-row: 4 / span 1;
+  grid-column: 4 / span 1;
+}
+
+.role-small13 {
+  grid-row: 1 / span 1;
+  grid-column: 5 / span 1;
+}
+.role-small14 {
+  grid-row: 1 / span 1;
+  grid-column: 6 / span 1;
+}
+.role-small15 {
+  grid-row: 1 / span 1;
+  grid-column: 7 / span 1;
+}
+.role-small16 {
+  grid-row: 2 / span 1;
+  grid-column: 5 / span 1;
+}
+.role-small17 {
+  grid-row: 2 / span 1;
+  grid-column: 6 / span 1;
+}
+.role-small18 {
+  grid-row: 2 / span 1;
+  grid-column: 7 / span 1;
+}
+.role-small19 {
+  grid-row: 3 / span 1;
+  grid-column: 5 / span 1;
+}
+.role-small20 {
+  grid-row: 3 / span 1;
+  grid-column: 6 / span 1;
+}
+.role-small21 {
+  grid-row: 3 / span 1;
+  grid-column: 7 / span 1;
+}
+.role-small22 {
+  grid-row: 3 / span 1;
+  grid-column: 8 / span 1;
+}
+
+
+.role-small23 {
+  grid-row: 4 / span 1;
+  grid-column: 5 / span 1;
+}
+.role-small24 {
+  grid-row: 4 / span 1;
+  grid-column: 6 / span 1;
+}
+.role-small25 {
+  grid-row: 4 / span 1;
+  grid-column: 7 / span 2;
+}
+.role-small12 {
+  grid-row: 4 / span 1;
+  grid-column: 4 / span 1;
+}
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 5rem;
+
+}
+
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+
+@media (max-width: 600px) {
+  .App {
+    grid-template-rows: 1fr;
+    grid-row-gap: 1rem;
+  }
+
+  .container {
+    grid-template-columns: 1fr;
+    grid-row-gap: 2rem;
+  }
+
+  .header {
+    height: min-content;
+  }
+
+  .calculator > * {
+    padding: 2px;
+    font-size: 1rem;
+  }
+
+}
+
 
 /* 
 
