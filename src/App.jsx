@@ -4,7 +4,6 @@ import Option from './components/Option';
 import Text from './components/Text';
 import Calculator from './components/Calculator';
 import Footer from './components/Footer';
-import './App.css';
 
 
 export default function App() {
