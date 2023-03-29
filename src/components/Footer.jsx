@@ -1,3 +1,7 @@
+/* eslint-disable react/jsx-tag-spacing */
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/jsx-no-target-blank */
+/* eslint-disable react/react-in-jsx-scope */
 export default function Footer() {
   return (
     <div className="footer">
@@ -11,5 +15,5 @@ export default function Footer() {
       </div>
       <p>&copy; {new Date().getFullYear()} Eda Eren.</p>
     </div>
-  )
+  );
 }

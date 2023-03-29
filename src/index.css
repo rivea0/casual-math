@@ -113,156 +113,156 @@ body {
   cursor: pointer;
 }
 
-#sqrt {
+.sqrt {
   grid-column:  1 / span 2;
 }
 
-#all-clear {
+.all-clear {
   grid-column: 3 / span 2;
 }
 
-#x-squared {
+.x-squared {
   grid-row: 2 / span 1;
   grid-column: 1 / span 1;
 }
 
-#exp {
+.exp {
   grid-row: 2 / span 1;
   grid-column: 2 / span 1;
 }
 
-#pi {
+.pi {
   grid-row: 2 / span 1;
   grid-column: 3 / span 1;
 }
 
-#e {
+.x {
   grid-row: 2 / span 1;
   grid-column: 4 / span 1;
 }
 
-#sin {
+.sin {
   grid-row: 3 / span 1;
   grid-column: 1 / span 1;
 }
 
-#cos {
+.cos {
   grid-row: 3 / span 1;
   grid-column: 2 / span 1;
 }
 
-#tan {
+.tan {
   grid-row: 3 / span 1;
   grid-column: 3 / span 1;
 }
 
-#ln {
+.ln {
   grid-row: 3 / span 1;
   grid-column: 4 / span 1;
 }
 
-#asin {
+.asin {
   grid-row: 4 / span 1;
   grid-column: 1 / span 1;
 }
 
-#acos {
+.acos {
   grid-row: 4 / span 1;
   grid-column: 2 / span 1;
 }
 
-#atan {
+.atan {
   grid-row: 4 / span 1;
   grid-column: 3 / span 1;
 }
 
-#log {
+.log {
   grid-row: 4 / span 1;
   grid-column: 4 / span 1;
 }
 
-#seven {
+.seven {
   grid-row: 1 / span 1;
   grid-column: 5 / span 1;
 }
 
-#eight {
+.eight {
   grid-row: 1 / span 1;
   grid-column: 6 / span 1;
 }
 
-#nine {
+.nine {
   grid-row: 1 / span 1;
   grid-column: 7 / span 1;
 }
 
-#four {
+.four {
   grid-row: 2 / span 1;
   grid-column: 5 / span 1;
 }
 
-#five {
+.five {
   grid-row: 2 / span 1;
   grid-column: 6 / span 1;
 }
 
-#six {
+.six {
   grid-row: 2 / span 1;
   grid-column: 7 / span 1;
 }
 
-#one {
+.one {
   grid-row: 3 / span 1;
   grid-column: 5 / span 1;
 }
 
-#two {
+.two {
   grid-row: 3 / span 1;
   grid-column: 6 / span 1;
 }
 
-#three {
+.three {
   grid-row: 3 / span 1;
   grid-column: 7 / span 1;
 }
 
-#backspace {
+.backspace {
   grid-row: 3 / span 1;
   grid-column: 8 / span 2;
 }
 
-#zero {
+.zero {
   grid-row: 4 / span 1;
   grid-column: 5 / span 2;
 }
 
-#dot {
+.dot {
   grid-row: 4 / span 1;
   grid-column: 7 / span 1;
 }
 
-#enter {
+.enter {
   grid-row: 4 / span 1;
   grid-column: 8 / span 2;
   font-weight: bold;
 }
 
-#plus {
+.plus {
   grid-row: 1 / span 1;
   grid-column: 8 / span 1;
 }
 
-#minus {
+.minus {
   grid-row: 1 / span 1;
   grid-column: 9 / span 1;
 }
 
-#multiply {
+.multiply {
   grid-row: 2 / span 1;
   grid-column: 8 / span 1;
 }
 
-#divide {
+.divide {
   grid-row: 2 / span 1;
   grid-column: 9 / span 1;
 }
