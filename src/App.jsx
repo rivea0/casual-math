@@ -15,7 +15,7 @@ import Footer from './components/Footer';
 export default function App() {
   const initialTextState = ['1. Select an option', '2. Type the equation', '3. Click enter (⏎) to get the result'];
   const [textState, setTextState] = useState(initialTextState);
-  const [equation, setEquation] = useState('');
+  const [equation, setEquation] = useState(''); // For the api call, should be formatted differently than textState
   const [option, setOption] = useState('');
 
   function handleOptionClick(e) {
@@ -58,14 +58,13 @@ export default function App() {
     }
 
     if (e.target.id === 'sqrt') {
-      // eslint-disable-next-line arrow-parens
       setEquation(prevEq => ((typeof +prevEq === 'number') ? `${Math.sqrt(prevEq)}` : ''));
 
       setTextState(prevTextState => {
         if (!prevTextState) return '';
         return (
           prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `√(${prevTextState})`
+            ? '' : `√(${prevTextState})`
         );
       });
       return;
@@ -77,7 +76,7 @@ export default function App() {
         if (!prevTextState) return '';
         return (
           prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `(${prevTextState})^2`
+            ? '' : `(${prevTextState})^2`
         );
       });
       return;
@@ -89,7 +88,7 @@ export default function App() {
         if (!prevTextState) return '';
         return (
           prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `(${prevTextState})^`
+            ? '' : `(${prevTextState})^`
         );
       });
       return;
@@ -101,7 +100,7 @@ export default function App() {
         if (!prevTextState) return '';
         return (
           prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `ln(${prevTextState})`
+            ? '' : `ln(${prevTextState})`
         );
       });
       return;
@@ -113,7 +112,31 @@ export default function App() {
         if (!prevTextState) return '';
         return (
           prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `log(${prevTextState})`
+            ? '' : `log(${prevTextState})`
+        );
+      });
+      return;
+    }
+
+    if (e.target.id === '+') {
+      setEquation(prevEq => `(${prevEq})`);
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? '' : `${prevTextState}+`
+        );
+      });
+      return;
+    }
+
+    if (e.target.id === '-') {
+      setEquation(prevEq => `(${prevEq})`);
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? '' : `${prevTextState}-`
         );
       });
       return;
@@ -125,7 +148,7 @@ export default function App() {
         if (!prevTextState) return '';
         return (
           prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `(${prevTextState})`
+            ? '' : `(${prevTextState})`
         );
       });
       return;
@@ -137,7 +160,7 @@ export default function App() {
         if (!prevTextState) return '';
         return (
           prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `(${prevTextState})/`
+            ? '' : `(${prevTextState})/`
         );
       });
       return;
@@ -147,8 +170,122 @@ export default function App() {
       setEquation(prevEq => `${prevEq}${Math.PI}`);
       setTextState(prevTextState => (
         prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-          ? Math.PI : `${prevTextState}${Math.PI}`
+          ? `${Math.PI}` : `${prevTextState}${Math.PI}`
       ));
+      return;
+    }
+
+    if (e.target.id === 'sin') {
+      setEquation(prevEq => {
+        if (prevEq.includes('(over)')) {
+          const eqClear = prevEq.replace('(over)', '/');
+          const [first, second] = eqClear.split('/');
+          return `${Math.sin(+first.slice(1, first.length - 1) / +second)}`;
+        }
+        return `${Math.sin(prevEq)}`;
+      });
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? '' : `sin(${prevTextState})`
+        );
+      });
+      return;
+    }
+
+    if (e.target.id === 'cos') {
+      setEquation(prevEq => {
+        if (prevEq.includes('(over)')) {
+          const eqClear = prevEq.replace('(over)', '/');
+          const [first, second] = eqClear.split('/');
+          return `${Math.cos(+first.slice(1, first.length - 1) / +second)}`;
+        }
+        return `${Math.cos(prevEq)}`;
+      });
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? '' : `cos(${prevTextState})`
+        );
+      });
+      return;
+    }
+
+    if (e.target.id === 'tan') {
+      setEquation(prevEq => {
+        if (prevEq.includes('(over)')) {
+          const eqClear = prevEq.replace('(over)', '/');
+          const [first, second] = eqClear.split('/');
+          return `${Math.tan(+first.slice(1, first.length - 1) / +second)}`;
+        }
+        return `${Math.tan(prevEq)}`;
+      });
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? '' : `tan(${prevTextState})`
+        );
+      });
+      return;
+    }
+
+    if (e.target.id === 'asin') {
+      setEquation(prevEq => {
+        if (prevEq.includes('(over)')) {
+          const eqClear = prevEq.replace('(over)', '/');
+          const [first, second] = eqClear.split('/');
+          return `${Math.asin(+first.slice(1, first.length - 1) / +second)}`;
+        }
+        return `${Math.asin(prevEq)}`;
+      });
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? '' : `asin(${prevTextState})`
+        );
+      });
+      return;
+    }
+
+    if (e.target.id === 'acos') {
+      setEquation(prevEq => {
+        if (prevEq.includes('(over)')) {
+          const eqClear = prevEq.replace('(over)', '/');
+          const [first, second] = eqClear.split('/');
+          return `${Math.acos(+first.slice(1, first.length - 1) / +second)}`;
+        }
+        return `${Math.acos(prevEq)}`;
+      });
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? '' : `acos(${prevTextState})`
+        );
+      });
+      return;
+    }
+
+    if (e.target.id === 'atan') {
+      setEquation(prevEq => {
+        if (prevEq.includes('(over)')) {
+          const eqClear = prevEq.replace('(over)', '/');
+          const [first, second] = eqClear.split('/');
+          return `${Math.atan(+first.slice(1, first.length - 1) / +second)}`;
+        }
+        return `${Math.atan(prevEq)}`;
+      });
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? '' : `atan(${prevTextState})`
+        );
+      });
       return;
     }
 
@@ -167,7 +304,7 @@ export default function App() {
     setEquation(prevEq => `${prevEq}${e.target.id}`);
     setTextState(prevTextState =>
       ((prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...'))
-        ? e.target.id : `${prevTextState}${e.target.id}`));
+        ? `${e.target.id}` : `${prevTextState}${e.target.id}`));
   }
 
   function resetText() {
@@ -184,7 +321,7 @@ export default function App() {
       ));
   }
 
-  console.log(equation);
+  console.log(textState, 'here');
 
   return (
     <div className="App">
