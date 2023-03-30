@@ -1,9 +1,3 @@
-/* eslint-disable object-curly-newline */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable react/prop-types */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable import/no-extraneous-dependencies */
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
 
@@ -45,6 +39,8 @@ export default function Calculator({ handleClick }) {
   );
 }
 
-function Button({ id, className, text, handleClick }) {
+function Button({
+  id, className, text, handleClick,
+}) {
   return <div id={id} className={className} onClick={handleClick}>{text}</div>;
 }

@@ -36,11 +36,22 @@ body {
   grid-template-rows: 1fr 5fr 1fr;
   grid-row-gap: 1rem;
 }
+@media (max-width: 600px) {
+  .App {
+    grid-template-rows: 1fr;
+    grid-row-gap: 1rem;
+  }
+}
 .header {
   display: flex;
   font-family: 'Montserrat', sans-serif;
   align-items: center;
   padding: 12px;
+}
+@media (max-width: 600px) {
+  .header {
+    height: min-content;
+  }
 }
 .header > h1:hover {
   cursor: pointer;
@@ -56,6 +67,12 @@ body {
   grid-column-gap: 2rem;
   padding: 0 12px 0 12px;
 }
+@media (max-width: 600px) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-row-gap: 2rem;
+  }
+}
 #options {
   display: grid;
   background-color: #5F6487;
@@ -66,10 +83,12 @@ body {
   padding: 16px;
   border: 1px solid #4a4e69;
 }
-.option:hover,
-.option:active {
+.option:hover {
   border-bottom: 1px solid #c9ada7;
   cursor: pointer;
+}
+.opt-active {
+  border-bottom: 1px solid #c9ada7;
 }
 .calc-area {
   display: grid;
@@ -86,6 +105,12 @@ body {
   align-content: center;
   font-size: 1.5rem;
 }
+@media (max-width: 600px) {
+  .text,
+  .text-form {
+    font-size: 1rem;
+  }
+}
 .text {
   justify-content: center;
   gap: 1rem;
@@ -98,6 +123,11 @@ body {
   width: 100%;
   box-sizing: border-box;
   padding: 8px 0 4px 12px;
+}
+@media (max-width: 600px) {
+  .text-input {
+    font-size: 1rem;
+  }
 }
 .calculator {
   display: grid;
@@ -116,6 +146,12 @@ body {
 .calculator > *:hover {
   border: 0.05rem solid #c9ada7;
   cursor: pointer;
+}
+@media (max-width: 600px) {
+  .calculator > * {
+    padding: 2px;
+    font-size: 1rem;
+  }
 }
 .sqrt {
   grid-column: 1 / span 2;
@@ -253,26 +289,4 @@ body {
   justify-content: center;
   align-items: center;
   gap: 2rem;
-}
-@media (max-width: 600px) {
-  .App {
-    grid-template-rows: 1fr;
-    grid-row-gap: 1rem;
-  }
-  .container {
-    grid-template-columns: 1fr;
-    grid-row-gap: 2rem;
-  }
-  .header {
-    height: min-content;
-  }
-  .calculator > * {
-    padding: 2px;
-    font-size: 1rem;
-  }
-  .text,
-  .text-form,
-  #equation {
-    font-size: 1rem;
-  }
 }
