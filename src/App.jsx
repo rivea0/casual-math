@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Header from './components/Header';
 import Option from './components/Option';
 import Text from './components/Text';
@@ -10,6 +10,9 @@ export default function App() {
   const [textState, setTextState] = useState(initialTextState);
   const [equation, setEquation] = useState('');
   const [option, setOption] = useState('');
+  const [eqFinal, setEqFinal] = useState('');
+  const [simplifyEqResult, setSimplifyEqResult] = useState('');
+  const isInitialMount = useRef(true);
 
   function handleOptionClick(e) {
     const outsiders = {
@@ -143,6 +146,78 @@ export default function App() {
       return;
     }
 
+    if (e.target.id === 'sin') {
+      setEquation(prevEq => prevEq && `${Math.sin(prevEq)}`);
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? prevTextState : `sin(${prevTextState})`
+        );
+      });
+      return;
+    }
+
+    if (e.target.id === 'cos') {
+      setEquation(prevEq => prevEq && `${Math.cos(prevEq)}`);
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? prevTextState : `cos(${prevTextState})`
+        );
+      });
+      return;
+    }
+
+    if (e.target.id === 'tan') {
+      setEquation(prevEq => prevEq && `${Math.tan(prevEq)}`);
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? prevTextState : `tan(${prevTextState})`
+        );
+      });
+      return;
+    }
+
+    if (e.target.id === 'asin') {
+      setEquation(prevEq => prevEq && `${Math.asin(prevEq)}`);
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? prevTextState : `asin(${prevTextState})`
+        );
+      });
+      return;
+    }
+
+    if (e.target.id === 'acos') {
+      setEquation(prevEq => prevEq && `${Math.acos(prevEq)}`);
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? prevTextState : `acos(${prevTextState})`
+        );
+      });
+      return;
+    }
+
+    if (e.target.id === 'atan') {
+      setEquation(prevEq => prevEq && `${Math.atan(prevEq)}`);
+      setTextState(prevTextState => {
+        if (!prevTextState) return '';
+        return (
+          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
+            ? prevTextState : `atan(${prevTextState})`
+        );
+      });
+      return;
+    }
+
     setEquation(prevEq => `${prevEq}${e.target.id}`);
     setTextState(prevTextState =>
       ((prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...'))
@@ -169,7 +244,24 @@ export default function App() {
       ));
   }
 
-  console.log(equation);
+  function handleEnterClick() {
+    setEqFinal(equation);
+  }
+
+  useEffect(() => {
+    const url = `https://newton.now.sh/api/v2/simplify/${eqFinal}`;
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      console.log('starting fetch');
+      fetch(url)
+        .then(res => res.json())
+        .then(data => setSimplifyEqResult(data.result))
+        .catch(err => console.log(err));
+    }
+  }, [eqFinal]);
+
+  console.log(simplifyEqResult, 'result');
 
   return (
     <div className="App">
@@ -186,7 +278,7 @@ export default function App() {
         </div>
         <div className="calc-area">
           <Text innerText={textState} textValue={textState} handleChange={handleChange} />
-          <Calculator handleClick={handleButtonClick} />
+          <Calculator handleClick={handleButtonClick} handleEnterClick={handleEnterClick} />
         </div>
       </div>
       <Footer />
