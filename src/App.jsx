@@ -1,11 +1,4 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable max-len */
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable no-console */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable arrow-parens */
-import { useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Header from './components/Header';
 import Option from './components/Option';
 import Text from './components/Text';
@@ -17,6 +10,9 @@ export default function App() {
   const [textState, setTextState] = useState(initialTextState);
   const [equation, setEquation] = useState(''); // For the api call, should be formatted differently than textState
   const [option, setOption] = useState('');
+  const [eqFinal, setEqFinal] = useState('');
+  const [simplifyEqResult, setSimplifyEqResult] = useState('');
+  const isInitialMount = useRef(true);
 
   function handleOptionClick(e) {
     const outsiders = {
@@ -32,9 +28,9 @@ export default function App() {
 
     for (const opt of document.querySelector('#options').childNodes) {
       if (opt.id === e.target.id) {
-        opt.classList.add('active');
-      } else if ([...opt.classList].includes('active')) {
-        opt.classList.remove('active');
+        opt.classList.add('opt-active');
+      } else if ([...opt.classList].includes('opt-active')) {
+        opt.classList.remove('opt-active');
       }
     }
   }
@@ -59,7 +55,6 @@ export default function App() {
 
     if (e.target.id === 'sqrt') {
       setEquation(prevEq => ((typeof +prevEq === 'number') ? `${Math.sqrt(prevEq)}` : ''));
-
       setTextState(prevTextState => {
         if (!prevTextState) return '';
         return (
@@ -289,18 +284,6 @@ export default function App() {
       return;
     }
 
-    // if (e.target.id === 'e') {
-    //   setEquation(prevEq => `${prevEq}${Math.E}`);
-    //   setTextState(prevTextState => {
-    //     console.log(prevTextState)
-    //    return (
-    //     (Array.isArray(prevTextState) && prevTextState[0].slice(-3) === '...') ?
-    //     Math.E : `${prevTextState}${Math.E}`
-    //     );
-    //   });
-    //   return;
-    // }
-
     setEquation(prevEq => `${prevEq}${e.target.id}`);
     setTextState(prevTextState =>
       ((prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...'))
@@ -310,18 +293,41 @@ export default function App() {
   function resetText() {
     setOption('');
     setTextState([...initialTextState]);
+
+    // Clear styling
+    for (const opt of document.querySelector('#options').childNodes) {
+      if ([...opt.classList].includes('opt-active')) {
+        opt.classList.remove('opt-active');
+      }
+    }
   }
 
   function handleChange(e) {
     setTextState(prevTextState =>
-      // console.log(prevTextState)
       (
         (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
           ? e.target.value.slice(-1) : e.target.value
       ));
   }
 
-  console.log(textState, 'here');
+  function handleEnterClick() {
+    setEqFinal(equation);
+  }
+
+  useEffect(() => {
+    const url = `https://newton.now.sh/api/v2/simplify/${eqFinal}`;
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else {
+      console.log('starting fetch');
+      fetch(url)
+        .then(res => res.json())
+        .then(data => setSimplifyEqResult(data.result))
+        .catch(err => console.log(err));
+    }
+  }, [eqFinal]);
+
+  console.log(simplifyEqResult, 'result');
 
   return (
     <div className="App">
@@ -338,7 +344,7 @@ export default function App() {
         </div>
         <div className="calc-area">
           <Text innerText={textState} textValue={textState} handleChange={handleChange} />
-          <Calculator handleClick={handleButtonClick} />
+          <Calculator handleClick={handleButtonClick} handleEnterClick={handleEnterClick} />
         </div>
       </div>
       <Footer />

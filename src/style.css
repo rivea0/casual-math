@@ -1,0 +1,292 @@
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/montserrat/v25/JTUHjIg1_i6t8kCHKm4532VJOt5-QNFgpCtr6Ew-.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto Serif';
+  font-style: normal;
+  font-weight: 200;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/robotoserif/v8/R71RjywflP6FLr3gZx7K8UyuXDs9zVwDmXCb8lxYgmuii32UGoVldX6UgfjL4-3sMM_kB_qXSEXTJQCFLH5-_bcElqotp6c.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Roboto Serif';
+  font-style: normal;
+  font-weight: 300;
+  font-stretch: normal;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/robotoserif/v8/R71RjywflP6FLr3gZx7K8UyuXDs9zVwDmXCb8lxYgmuii32UGoVldX6UgfjL4-3sMM_kB_qXSEXTJQCFLH5-_bcElnQtp6c.ttf) format('truetype');
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  min-height: 100vh;
+  background-color: #4a4e69;
+  color: #ffffff;
+  font-family: 'Roboto Serif', serif;
+}
+.App {
+  display: grid;
+  grid-template-rows: 1fr 5fr 1fr;
+  grid-row-gap: 1rem;
+}
+@media (max-width: 600px) {
+  .App {
+    grid-template-rows: 1fr;
+    grid-row-gap: 1rem;
+  }
+}
+.header {
+  display: flex;
+  font-family: 'Montserrat', sans-serif;
+  align-items: center;
+  padding: 12px;
+}
+@media (max-width: 600px) {
+  .header {
+    height: min-content;
+  }
+}
+.header > h1:hover {
+  cursor: pointer;
+}
+#site-name {
+  font-size: 1.5rem;
+  color: #c9ada7;
+  margin: 0.75rem 0.25rem;
+}
+.container {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-column-gap: 2rem;
+  padding: 0 12px 0 12px;
+}
+@media (max-width: 600px) {
+  .container {
+    grid-template-columns: 1fr;
+    grid-row-gap: 2rem;
+  }
+}
+#options {
+  display: grid;
+  background-color: #5F6487;
+  font-weight: 200;
+}
+.option {
+  font-size: 1.75rem;
+  padding: 16px;
+  border: 1px solid #4a4e69;
+}
+.option:hover {
+  border-bottom: 1px solid #c9ada7;
+  cursor: pointer;
+}
+.opt-active {
+  border-bottom: 1px solid #c9ada7;
+}
+.calc-area {
+  display: grid;
+  grid-row-gap: 2rem;
+  grid-template-rows: 0.5fr 1fr;
+}
+.text,
+.text-form {
+  background-color: rgba(113, 125, 155, 0.3);
+  height: 100%;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  flex-flow: column wrap;
+  align-content: center;
+  font-size: 1.5rem;
+}
+@media (max-width: 600px) {
+  .text,
+  .text-form {
+    font-size: 1rem;
+  }
+}
+.text {
+  justify-content: center;
+  gap: 1rem;
+}
+.text-input {
+  background-color: inherit;
+  border: none;
+  color: #ffffff;
+  font-size: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 0 4px 12px;
+}
+@media (max-width: 600px) {
+  .text-input {
+    font-size: 1rem;
+  }
+}
+.calculator {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  background-color: #5F6487;
+  font-weight: 300;
+}
+.calculator > * {
+  width: 100%;
+  border: 0.05rem solid #4a4e69;
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+}
+.calculator > *:hover {
+  border: 0.05rem solid #c9ada7;
+  cursor: pointer;
+}
+@media (max-width: 600px) {
+  .calculator > * {
+    padding: 2px;
+    font-size: 1rem;
+  }
+}
+.sqrt {
+  grid-column: 1 / span 2;
+}
+.all-clear {
+  grid-column: 3 / span 2;
+}
+.x-squared {
+  grid-row: 2 / span 1;
+  grid-column: 1 / span 1;
+}
+.exp {
+  grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+}
+.pi {
+  grid-row: 2 / span 1;
+  grid-column: 3 / span 1;
+}
+.x {
+  grid-row: 2 / span 1;
+  grid-column: 4 / span 1;
+}
+.sin {
+  grid-row: 3 / span 1;
+  grid-column: 1 / span 1;
+}
+.cos {
+  grid-row: 3 / span 1;
+  grid-column: 2 / span 1;
+}
+.tan {
+  grid-row: 3 / span 1;
+  grid-column: 3 / span 1;
+}
+.ln {
+  grid-row: 3 / span 1;
+  grid-column: 4 / span 1;
+}
+.asin {
+  grid-row: 4 / span 1;
+  grid-column: 1 / span 1;
+}
+.acos {
+  grid-row: 4 / span 1;
+  grid-column: 2 / span 1;
+}
+.atan {
+  grid-row: 4 / span 1;
+  grid-column: 3 / span 1;
+}
+.log {
+  grid-row: 4 / span 1;
+  grid-column: 4 / span 1;
+}
+.seven {
+  grid-row: 1 / span 1;
+  grid-column: 5 / span 1;
+}
+.eight {
+  grid-row: 1 / span 1;
+  grid-column: 6 / span 1;
+}
+.nine {
+  grid-row: 1 / span 1;
+  grid-column: 7 / span 1;
+}
+.four {
+  grid-row: 2 / span 1;
+  grid-column: 5 / span 1;
+}
+.five {
+  grid-row: 2 / span 1;
+  grid-column: 6 / span 1;
+}
+.six {
+  grid-row: 2 / span 1;
+  grid-column: 7 / span 1;
+}
+.one {
+  grid-row: 3 / span 1;
+  grid-column: 5 / span 1;
+}
+.two {
+  grid-row: 3 / span 1;
+  grid-column: 6 / span 1;
+}
+.three {
+  grid-row: 3 / span 1;
+  grid-column: 7 / span 1;
+}
+.backspace {
+  grid-row: 3 / span 1;
+  grid-column: 8 / span 2;
+}
+.zero {
+  grid-row: 4 / span 1;
+  grid-column: 5 / span 2;
+}
+.dot {
+  grid-row: 4 / span 1;
+  grid-column: 7 / span 1;
+}
+.enter {
+  grid-row: 4 / span 1;
+  grid-column: 8 / span 2;
+  font-weight: bold;
+}
+.plus {
+  grid-row: 1 / span 1;
+  grid-column: 8 / span 1;
+}
+.minus {
+  grid-row: 1 / span 1;
+  grid-column: 9 / span 1;
+}
+.multiply {
+  grid-row: 2 / span 1;
+  grid-column: 8 / span 1;
+}
+.divide {
+  grid-row: 2 / span 1;
+  grid-column: 9 / span 1;
+}
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}

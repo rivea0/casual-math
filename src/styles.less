@@ -1,5 +1,58 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Serif:wght@200;300&display=swap');
 
+
+#colors() {
+  bg: #4a4e69;
+  secondary-bg: #5F6487;
+  accent: #c9ada7;
+  text-bg: rgba(113, 125, 155, 30%);
+  text: #ffffff;
+  text-secondary: rgba(255, 255, 255, 0.7);  
+}
+
+
+#grid-bundle() {
+  .App-grid {
+    display: grid;
+    grid-template-rows: 1fr 5fr 1fr;
+    grid-row-gap: 1rem;
+    @media (max-width: 600px) {
+      grid-template-rows: 1fr;
+      grid-row-gap: 1rem;
+    }
+  }
+
+  .container-grid {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-column-gap: 2rem;
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+      grid-row-gap: 2rem;
+    }
+  }
+
+  .calc-area-grid {
+    display: grid;
+    grid-row-gap: 2rem;
+    grid-template-rows: 0.5fr 1fr;  
+  }
+
+  .calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(4, 1fr);  
+  }
+}
+
+#flex-centering() {
+  .flex-center {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,15 +60,13 @@
 
 body {
   min-height: 100vh;
-  background-color: #4a4e69;
-  color: white;
+  background-color: #colors[bg];
+  color: #colors[text];
   font-family: 'Roboto Serif', serif;
 }
 
 .App {
-  display: grid;
-  grid-template-rows: 1fr 5fr 1fr;
-  grid-row-gap: 1rem;
+  #grid-bundle.App-grid();
 }
 
 .header {
@@ -23,6 +74,9 @@ body {
   font-family: 'Montserrat', sans-serif;
   align-items: center;
   padding: 12px;
+  @media (max-width: 600px) {
+    height: min-content;
+  }
 }
 
 .header > h1:hover {
@@ -31,86 +85,90 @@ body {
 
 #site-name {
   font-size: 1.5rem;
-  color: #c9ada7;
+  color: #colors[accent];
   margin: .75rem .25rem;
 }
 
 .container {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  grid-column-gap: 2rem;
+  #grid-bundle.container-grid();
   padding: 0 12px 0 12px;
 }
 
 #options {
   display: grid;
-  background-color: #5F6487;
+  background-color: #colors[secondary-bg];
   font-weight: 200;
 }
 
 .option {
   font-size: 1.75rem;
   padding: 16px;
-  border: 1px solid #4a4e69;
+  border: 1px solid #colors[bg];
+  &:hover {
+    border-bottom: 1px solid #colors[accent];
+    cursor: pointer;  
+  }
 }
 
-.option:hover, .active {
-  border-bottom: 1px solid #c9ada7;
-  cursor: pointer;
+.opt-active {
+  border-bottom: 1px solid #colors[accent];
 }
-
 
 .calc-area {
-  display: grid;
-  grid-row-gap: 2rem;
-  grid-template-rows: 0.5fr 1fr;
+  #grid-bundle.calc-area-grid();
 }
 
 .text, .text-form {
-  background-color: rgba(113, 125, 155, 30%);
+  background-color: #colors[text-bg];
   height: 100%;
-  color: rgba(255, 255, 255, 0.7);
+  color: #colors[text-secondary];
   display: flex;
   flex-flow: column wrap;
   align-content: center;
   font-size: 1.5rem;
+  @media (max-width: 600px) {
+    font-size: 1rem;
+  }
 }
 
 .text {
   justify-content: center;
   gap: 1rem;
-
 }
 
 .text-input {
   background-color: inherit;
   border: none;
-  color: white;
+  color: #colors[text];
   font-size: 2rem;
   width: 100%;
   box-sizing: border-box;
   padding: 8px 0 4px 12px;
+  @media (max-width: 600px) {
+    font-size: 1rem;
+  }
 }
 
 .calculator {
-  background-color: #5F6487;
-  display: grid;
-  grid-template-columns: repeat(9, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  #grid-bundle.calculator-grid();
+  background-color: #colors[secondary-bg];
   font-weight: 300;
 }
 
 .calculator > * {
   width: 100%;
-  border: .05rem solid #4a4e69;
+  border: .05rem solid #colors[bg];
   display: grid;
   place-items: center;
   font-size: 2rem;
-}
-
-.calculator > *:hover {
-  border: .05rem solid #c9ada7;
-  cursor: pointer;
+  &:hover {
+    border: .05rem solid #colors[accent];
+    cursor: pointer;  
+  }
+  @media (max-width: 600px) {
+    padding: 2px;
+    font-size: 1rem;
+  }
 }
 
 .sqrt {
@@ -268,43 +326,13 @@ body {
 }
 
 .footer {
-  display: flex;
+  #flex-centering.flex-center();
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 1rem;
   margin-top: 2rem;
 }
 
 .icons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  #flex-centering.flex-center();
   gap: 2rem;
-}
-
-
-@media (max-width: 600px) {
-  .App {
-    grid-template-rows: 1fr;
-    grid-row-gap: 1rem;
-  }
-
-  .container {
-    grid-template-columns: 1fr;
-    grid-row-gap: 2rem;
-  }
-
-  .header {
-    height: min-content;
-  }
-
-  .calculator > * {
-    padding: 2px;
-    font-size: 1rem;
-  }
-
-  .text, .text-form, #equation {
-    font-size: 1rem;
-  }
 }

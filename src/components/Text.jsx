@@ -1,8 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable arrow-parens */
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable react/prop-types */
 export default function Text({ innerText, textValue, handleChange }) {
   return (
     (innerText.length > 1 && Array.isArray(innerText)) ? (
