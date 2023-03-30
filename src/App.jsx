@@ -1,10 +1,3 @@
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable max-len */
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable no-console */
-/* eslint-disable implicit-arrow-linebreak */
-/* eslint-disable arrow-parens */
 import { useState } from 'react';
 import Header from './components/Header';
 import Option from './components/Option';
@@ -32,9 +25,9 @@ export default function App() {
 
     for (const opt of document.querySelector('#options').childNodes) {
       if (opt.id === e.target.id) {
-        opt.classList.add('active');
-      } else if ([...opt.classList].includes('active')) {
-        opt.classList.remove('active');
+        opt.classList.add('opt-active');
+      } else if ([...opt.classList].includes('opt-active')) {
+        opt.classList.remove('opt-active');
       }
     }
   }
@@ -58,9 +51,7 @@ export default function App() {
     }
 
     if (e.target.id === 'sqrt') {
-      // eslint-disable-next-line arrow-parens
       setEquation(prevEq => ((typeof +prevEq === 'number') ? `${Math.sqrt(prevEq)}` : ''));
-
       setTextState(prevTextState => {
         if (!prevTextState) return '';
         return (
@@ -147,37 +138,31 @@ export default function App() {
       setEquation(prevEq => `${prevEq}${Math.PI}`);
       setTextState(prevTextState => (
         prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-          ? Math.PI : `${prevTextState}${Math.PI}`
+          ? `${Math.PI}` : `${prevTextState}${Math.PI}`
       ));
       return;
     }
 
-    // if (e.target.id === 'e') {
-    //   setEquation(prevEq => `${prevEq}${Math.E}`);
-    //   setTextState(prevTextState => {
-    //     console.log(prevTextState)
-    //    return (
-    //     (Array.isArray(prevTextState) && prevTextState[0].slice(-3) === '...') ?
-    //     Math.E : `${prevTextState}${Math.E}`
-    //     );
-    //   });
-    //   return;
-    // }
-
     setEquation(prevEq => `${prevEq}${e.target.id}`);
     setTextState(prevTextState =>
       ((prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...'))
-        ? e.target.id : `${prevTextState}${e.target.id}`));
+        ? `${e.target.id}` : `${prevTextState}${e.target.id}`));
   }
 
   function resetText() {
     setOption('');
     setTextState([...initialTextState]);
+
+    // Clear styling
+    for (const opt of document.querySelector('#options').childNodes) {
+      if ([...opt.classList].includes('opt-active')) {
+        opt.classList.remove('opt-active');
+      }
+    }
   }
 
   function handleChange(e) {
     setTextState(prevTextState =>
-      // console.log(prevTextState)
       (
         (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
           ? e.target.value.slice(-1) : e.target.value
