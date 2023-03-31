@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from 'react';
 import Header from './components/Header';
 import Option from './components/Option';
 import Text from './components/Text';
-import Calculator from './components/Calculator';
 import Footer from './components/Footer';
 
 export default function App() {
@@ -10,21 +9,27 @@ export default function App() {
   const [textState, setTextState] = useState(initialTextState);
   const [equation, setEquation] = useState('');
   const [option, setOption] = useState('');
-  const [eqFinal, setEqFinal] = useState('');
-  const [simplifyEqResult, setSimplifyEqResult] = useState('');
+  const [result, setResult] = useState('');
+  // For doing the fetching only on updates, not when the component has mounted
   const isInitialMount = useRef(true);
 
+  const options = {
+    simplify: { name: 'Simplify', id: 0 },
+    factor: { name: 'Factor', id: 1 },
+    derive: { name: 'Derive', id: 2 },
+    integrate: { name: 'Integrate', id: 3 },
+    zeroes: { name: 'Find 0\'s', id: 4 },
+    tangent: { name: 'Find Tangent Line', id: 5 },
+    area: { name: 'Find Area Under Curve', id: 6 },
+  };
+
   function handleOptionClick(e) {
-    const outsiders = {
-      zeroes: 'find 0\'s',
-      tangentLine: 'find tangent line',
-      areaUnderCurve: 'find area under curve',
-    };
-
-    const role = Object.keys(outsiders).includes(e.target.id) ? outsiders[e.target.id] : e.target.id;
-
-    setTextState([`Type equation to ${role}...`]);
+    setTextState([`Type equation to ${options[e.target.id].name.toLowerCase()}:`]);
     setOption(e.target.id);
+
+    // For styling
+
+    document.querySelector('.calc-area').style.gridTemplateRows = '1fr 1fr';
 
     for (const opt of document.querySelector('#options').childNodes) {
       if (opt.id === e.target.id) {
@@ -35,200 +40,14 @@ export default function App() {
     }
   }
 
-  function handleButtonClick(e) {
-    if (!option) {
-      setTextState([...initialTextState]);
-      return;
-    }
-
-    if (e.target.id === 'all-clear') {
-      setEquation('');
-      setTextState('');
-      return;
-    }
-
-    if (e.target.id === 'backspace') {
-      setEquation(prevEq => prevEq.slice(0, prevEq.length - 1));
-      setTextState(prevTextState => prevTextState.slice(0, prevTextState.length - 1));
-      return;
-    }
-
-    if (e.target.id === 'sqrt') {
-      setEquation(prevEq => ((typeof +prevEq === 'number') ? `${Math.sqrt(prevEq)}` : ''));
-      setTextState(prevTextState => {
-        if (!prevTextState) return '';
-        return (
-          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `√(${prevTextState})`
-        );
-      });
-      return;
-    }
-
-    if (e.target.id === 'x-squared') {
-      setEquation(prevEq => prevEq && `(${prevEq})^2`);
-      setTextState(prevTextState => {
-        if (!prevTextState) return '';
-        return (
-          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `(${prevTextState})^2`
-        );
-      });
-      return;
-    }
-
-    if (e.target.id === 'exp') {
-      setEquation(prevEq => prevEq && `(${prevEq})^`);
-      setTextState(prevTextState => {
-        if (!prevTextState) return '';
-        return (
-          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `(${prevTextState})^`
-        );
-      });
-      return;
-    }
-
-    if (e.target.id === 'ln') {
-      setEquation(prevEq => prevEq && `${Math.log(prevEq)}`);
-      setTextState(prevTextState => {
-        if (!prevTextState) return '';
-        return (
-          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `ln(${prevTextState})`
-        );
-      });
-      return;
-    }
-
-    if (e.target.id === 'log') {
-      setEquation(prevEq => prevEq && `${Math.log10(prevEq)}`);
-      setTextState(prevTextState => {
-        if (!prevTextState) return '';
-        return (
-          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `log(${prevTextState})`
-        );
-      });
-      return;
-    }
-
-    if (e.target.id === 'multiply') {
-      setEquation(prevEq => `(${prevEq})`);
-      setTextState(prevTextState => {
-        if (!prevTextState) return '';
-        return (
-          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `(${prevTextState})`
-        );
-      });
-      return;
-    }
-
-    if (e.target.id === 'divide') {
-      setEquation(prevEq => `(${prevEq})(over)`);
-      setTextState(prevTextState => {
-        if (!prevTextState) return '';
-        return (
-          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `(${prevTextState})/`
-        );
-      });
-      return;
-    }
-
-    if (e.target.id === 'pi') {
-      setEquation(prevEq => `${prevEq}${Math.PI}`);
-      setTextState(prevTextState => (
-        prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-          ? `${Math.PI}` : `${prevTextState}${Math.PI}`
-      ));
-      return;
-    }
-
-    if (e.target.id === 'sin') {
-      setEquation(prevEq => prevEq && `${Math.sin(prevEq)}`);
-      setTextState(prevTextState => {
-        if (!prevTextState) return '';
-        return (
-          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `sin(${prevTextState})`
-        );
-      });
-      return;
-    }
-
-    if (e.target.id === 'cos') {
-      setEquation(prevEq => prevEq && `${Math.cos(prevEq)}`);
-      setTextState(prevTextState => {
-        if (!prevTextState) return '';
-        return (
-          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `cos(${prevTextState})`
-        );
-      });
-      return;
-    }
-
-    if (e.target.id === 'tan') {
-      setEquation(prevEq => prevEq && `${Math.tan(prevEq)}`);
-      setTextState(prevTextState => {
-        if (!prevTextState) return '';
-        return (
-          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `tan(${prevTextState})`
-        );
-      });
-      return;
-    }
-
-    if (e.target.id === 'asin') {
-      setEquation(prevEq => prevEq && `${Math.asin(prevEq)}`);
-      setTextState(prevTextState => {
-        if (!prevTextState) return '';
-        return (
-          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `asin(${prevTextState})`
-        );
-      });
-      return;
-    }
-
-    if (e.target.id === 'acos') {
-      setEquation(prevEq => prevEq && `${Math.acos(prevEq)}`);
-      setTextState(prevTextState => {
-        if (!prevTextState) return '';
-        return (
-          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `acos(${prevTextState})`
-        );
-      });
-      return;
-    }
-
-    if (e.target.id === 'atan') {
-      setEquation(prevEq => prevEq && `${Math.atan(prevEq)}`);
-      setTextState(prevTextState => {
-        if (!prevTextState) return '';
-        return (
-          prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-            ? prevTextState : `atan(${prevTextState})`
-        );
-      });
-      return;
-    }
-
-    setEquation(prevEq => `${prevEq}${e.target.id}`);
-    setTextState(prevTextState =>
-      ((prevTextState && (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...'))
-        ? `${e.target.id}` : `${prevTextState}${e.target.id}`));
-  }
-
   function resetText() {
     setOption('');
     setTextState([...initialTextState]);
 
     // Clear styling
+
+    document.querySelector('.calc-area').style.gridTemplateRows = '1fr';
+
     for (const opt of document.querySelector('#options').childNodes) {
       if ([...opt.classList].includes('opt-active')) {
         opt.classList.remove('opt-active');
@@ -236,49 +55,44 @@ export default function App() {
     }
   }
 
-  function handleChange(e) {
-    setTextState(prevTextState =>
-      (
-        (Array.isArray(prevTextState) || prevTextState[0].slice(-3) === '...')
-          ? e.target.value.slice(-1) : e.target.value
-      ));
+  function handleEnterClick(e) {
+    if (e.keyCode === 13) { // if it is the enter key
+      setEquation(e.target.value);
+    }
   }
 
-  function handleEnterClick() {
-    setEqFinal(equation);
+  function handleButtonClick(e) {
+    setEquation(e.target.previousElementSibling.value);
   }
 
   useEffect(() => {
-    const url = `https://newton.now.sh/api/v2/simplify/${eqFinal}`;
+    const url = `https://newton.now.sh/api/v2/${option}/${encodeURIComponent(equation)}`;
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
       console.log('starting fetch');
       fetch(url)
         .then(res => res.json())
-        .then(data => setSimplifyEqResult(data.result))
+        .then(data => setResult(data.result))
         .catch(err => console.log(err));
     }
-  }, [eqFinal]);
+  }, [equation]);
 
-  console.log(simplifyEqResult, 'result');
+  console.log(equation, 'here equation');
+  console.log(result, 'here result of ', option);
 
   return (
     <div className="App">
       <Header onClick={resetText} />
       <div className="container">
         <div id="options">
-          <Option name="Simplify" id="simplify" onClick={handleOptionClick} />
-          <Option name="Factor" id="factor" onClick={handleOptionClick} />
-          <Option name="Derive" id="derive" onClick={handleOptionClick} />
-          <Option name="Integrate" id="integrate" onClick={handleOptionClick} />
-          <Option name="Find 0's" id="zeroes" onClick={handleOptionClick} />
-          {/* <Option name="Find Tangent Line" id="tangentLine" onClick={handleOptionClick} />
-          <Option name="Find Area Under Curve" id="areaUnderCurve" onClick={handleOptionClick} /> */}
+          {
+            Object.entries(options).map(([k, val]) => (
+              <Option key={val.id} name={val.name} id={k} onClick={handleOptionClick} />))
+          }
         </div>
         <div className="calc-area">
-          <Text innerText={textState} textValue={textState} handleChange={handleChange} />
-          <Calculator handleClick={handleButtonClick} handleEnterClick={handleEnterClick} />
+          <Text innerText={textState} handleEnterClick={handleEnterClick} handleButtonClick={handleButtonClick} />
         </div>
       </div>
       <Footer />
