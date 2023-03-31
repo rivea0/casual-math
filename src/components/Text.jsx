@@ -1,30 +1,54 @@
-export default function Text({ innerText, textValue, handleChange }) {
+import { useState } from 'react';
+
+export default function Text({ innerText, handleEnterClick, handleButtonClick }) {
   return (
+    // Display the initialTextState, and a link to help page
     (innerText.length > 1 && Array.isArray(innerText)) ? (
       <div className="text">
         {innerText.map((textItem) => <p key={textItem}>{textItem}</p>)}
+        <br />
+        <p>
+          See
+          {' '}
+          <a href="#">help</a>
+          {' '}
+          for more.
+        </p>
       </div>
     )
-      : <EquationForm placeholder={innerText[0]} textValue={textValue} handleChange={handleChange} />
+      : <EquationForm displayText={innerText} handleEnterClick={handleEnterClick} onClick={handleButtonClick} />
   );
 }
 
-function EquationForm({ textValue, handleChange }) {
+function EquationForm({ displayText, handleEnterClick, onClick }) {
+  const [equationValue, setEquationValue] = useState('');
+
+  function handleChange(e) {
+    setEquationValue(e.target.value);
+  }
+
   return (
     <form action="" onSubmit={e => { e.preventDefault(); }}>
       <div className="text-form">
-        <label htmlFor="equation" />
+        <label htmlFor="equation">{displayText}</label>
         <input
           type="text"
-          placeholder={textValue}
           name="equation"
           className="text-input"
           id="equation"
           ref={input => input && input.focus()}
-          value={textValue}
+          value={equationValue}
           onChange={handleChange}
+          onKeyUp={handleEnterClick}
         />
+        {Array.isArray(displayText) && <Button onClick={onClick} displayText={displayText} /> }
       </div>
     </form>
+  );
+}
+
+function Button({ onClick, displayText }) {
+  return (
+    <button type="submit" onClick={onClick}>{displayText[0].split('to ')[1].slice(0, -1)}</button>
   );
 }
