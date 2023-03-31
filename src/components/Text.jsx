@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import 'katex/dist/katex.min.css';
+import { InlineMath, BlockMath } from 'react-katex';
 
-export default function Text({ innerText, handleEnterClick, handleButtonClick }) {
+export default function Text({ innerText, handleEnterClick, handleButtonClick, handleChange, equationValue, content }) {
   return (
     // Display the initialTextState, and a link to help page
     (innerText.length > 1 && Array.isArray(innerText)) ? (
@@ -16,17 +17,15 @@ export default function Text({ innerText, handleEnterClick, handleButtonClick })
         </p>
       </div>
     )
-      : <EquationForm displayText={innerText} handleEnterClick={handleEnterClick} onClick={handleButtonClick} />
-  );
+      : (
+        <>
+          <EquationForm displayText={innerText} handleEnterClick={handleEnterClick} onClick={handleButtonClick} handleChange={handleChange} equationValue={equationValue} />
+          <ResultArea content={content} />
+        </>
+      ));
 }
 
-function EquationForm({ displayText, handleEnterClick, onClick }) {
-  const [equationValue, setEquationValue] = useState('');
-
-  function handleChange(e) {
-    setEquationValue(e.target.value);
-  }
-
+function EquationForm({ displayText, handleEnterClick, onClick, handleChange, equationValue }) {
   return (
     <form action="" onSubmit={e => { e.preventDefault(); }}>
       <div className="text-form">
@@ -50,5 +49,19 @@ function EquationForm({ displayText, handleEnterClick, onClick }) {
 function Button({ onClick, displayText }) {
   return (
     <button type="submit" onClick={onClick}>{displayText[0].split('to ')[1].slice(0, -1)}</button>
+  );
+}
+
+function ResultArea({ content }) {
+  return (
+    <div className={content && 'result-area'}>
+      {content && (
+      <>
+        <p>The result is:</p>
+        <br />
+        <p><InlineMath math={content} /></p>
+      </>
+      )}
+    </div>
   );
 }

@@ -13,6 +13,12 @@ export default function App() {
   // For doing the fetching only on updates, not when the component has mounted
   const isInitialMount = useRef(true);
 
+  const [equationValue, setEquationValue] = useState('');
+
+  function handleChange(e) {
+    setEquationValue(e.target.value);
+  }
+
   const options = {
     simplify: { name: 'Simplify', id: 0 },
     factor: { name: 'Factor', id: 1 },
@@ -26,9 +32,10 @@ export default function App() {
   function handleOptionClick(e) {
     setTextState([`Type equation to ${options[e.target.id].name.toLowerCase()}:`]);
     setOption(e.target.id);
+    setResult('');
+    setEquationValue('');
 
     // For styling
-
     document.querySelector('.calc-area').style.gridTemplateRows = '1fr 1fr';
 
     for (const opt of document.querySelector('#options').childNodes) {
@@ -45,7 +52,6 @@ export default function App() {
     setTextState([...initialTextState]);
 
     // Clear styling
-
     document.querySelector('.calc-area').style.gridTemplateRows = '1fr';
 
     for (const opt of document.querySelector('#options').childNodes) {
@@ -73,7 +79,12 @@ export default function App() {
       console.log('starting fetch');
       fetch(url)
         .then(res => res.json())
-        .then(data => setResult(data.result))
+        .then(data => {
+          setResult(data.result);
+          const resultArea = document.createElement('div');
+          document.querySelector('.calc-area').appendChild(resultArea);
+          resultArea.textContent = result;
+        })
         .catch(err => console.log(err));
     }
   }, [equation]);
@@ -92,7 +103,7 @@ export default function App() {
           }
         </div>
         <div className="calc-area">
-          <Text innerText={textState} handleEnterClick={handleEnterClick} handleButtonClick={handleButtonClick} />
+          <Text innerText={textState} handleEnterClick={handleEnterClick} handleButtonClick={handleButtonClick} handleChange={handleChange} equationValue={equationValue} content={result} />
         </div>
       </div>
       <Footer />
