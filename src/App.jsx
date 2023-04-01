@@ -10,6 +10,7 @@ export default function App() {
   const [equation, setEquation] = useState('');
   const [option, setOption] = useState('');
   const [result, setResult] = useState('');
+  const [lockedResultArea, setLockedResultArea] = useState(false);
   // For doing the fetching only on updates, not when the component has mounted
   const isInitialMount = useRef(true);
 
@@ -25,8 +26,6 @@ export default function App() {
     derive: { name: 'Derive', id: 2 },
     integrate: { name: 'Integrate', id: 3 },
     zeroes: { name: 'Find 0\'s', id: 4 },
-    tangent: { name: 'Find Tangent Line', id: 5 },
-    area: { name: 'Find Area Under Curve', id: 6 },
   };
 
   function handleOptionClick(e) {
@@ -62,16 +61,31 @@ export default function App() {
   }
 
   function handleEnterClick(e) {
+    setLockedResultArea(true);
     if (e.keyCode === 13) { // if it is the enter key
-      setEquation(e.target.value);
+      if (e.target.value.includes('/')) {
+        const cleanRes = e.target.value.replace('/', '(over)');
+        setEquation(cleanRes);
+      } else {
+        setEquation(e.target.value);
+      }
     }
   }
 
   function handleButtonClick(e) {
-    setEquation(e.target.previousElementSibling.value);
+    setLockedResultArea(true);
+    if (e.target.previousElementSibling.value.includes('/')) {
+      const cleanRes = e.target.previousElementSibling.value.replace('/', '(over)');
+      setEquation(cleanRes);
+    } else {
+      setEquation(e.target.previousElementSibling.value);
+    }
   }
 
+  const resultArea = document.createElement('div');
+
   useEffect(() => {
+    let ignore = false;
     const url = `https://newton.now.sh/api/v2/${option}/${encodeURIComponent(equation)}`;
     if (isInitialMount.current) {
       isInitialMount.current = false;
@@ -80,17 +94,25 @@ export default function App() {
       fetch(url)
         .then(res => res.json())
         .then(data => {
-          setResult(data.result);
-          const resultArea = document.createElement('div');
-          document.querySelector('.calc-area').appendChild(resultArea);
-          resultArea.textContent = result;
+          if (!ignore) {
+            if (!lockedResultArea) {
+              document.querySelector('.calc-area').appendChild(resultArea);
+              setLockedResultArea(true);
+            }
+            setResult(data.result);
+            resultArea.textContent = result;
+            setLockedResultArea(false);
+          }
         })
         .catch(err => console.log(err));
     }
+    return () => {
+      ignore = true;
+    };
   }, [equation]);
 
   console.log(equation, 'here equation');
-  console.log(result, 'here result of ', option);
+  // console.log(result, 'here result of ', option);
 
   return (
     <div className="App">
@@ -103,7 +125,7 @@ export default function App() {
           }
         </div>
         <div className="calc-area">
-          <Text innerText={textState} handleEnterClick={handleEnterClick} handleButtonClick={handleButtonClick} handleChange={handleChange} equationValue={equationValue} content={result} />
+          <Text innerText={textState} handleEnterClick={handleEnterClick} handleButtonClick={handleButtonClick} handleChange={handleChange} equationValue={equationValue} content={result} optionValue={option} />
         </div>
       </div>
       <Footer />
