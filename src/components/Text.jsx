@@ -1,5 +1,5 @@
 import 'katex/dist/katex.min.css';
-import { InlineMath, BlockMath } from 'react-katex';
+import { InlineMath } from 'react-katex';
 
 export default function Text({ innerText, handleEnterClick, handleButtonClick, handleChange, equationValue, content }) {
   return (
@@ -48,7 +48,7 @@ function EquationForm({ displayText, handleEnterClick, onClick, handleChange, eq
 
 function Button({ onClick, displayText }) {
   return (
-    <button type="submit" onClick={onClick}>{displayText[0].split('to ')[1].slice(0, -1)}</button>
+    <button type="submit" onClick={onClick}>{(Array.isArray(displayText) && displayText[0].split('to ')[1].slice(0, -1))}</button>
   );
 }
 
