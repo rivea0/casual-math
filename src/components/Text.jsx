@@ -1,30 +1,75 @@
-export default function Text({ innerText, textValue, handleChange }) {
+import 'katex/dist/katex.min.css';
+import { InlineMath } from 'react-katex';
+
+export default function Text({ innerText, handleEnterPress, handleButtonClick, handleChange, equationValue, content, result }) {
   return (
+    // Display the initialTextState, and a link to help page
     (innerText.length > 1 && Array.isArray(innerText)) ? (
-      <div className="text">
+      <div className="text" data-testid="text">
         {innerText.map((textItem) => <p key={textItem}>{textItem}</p>)}
+        <br />
+        <p>
+          See
+          {' '}
+          <a href="#">help</a>
+          {' '}
+          for more.
+        </p>
       </div>
     )
-      : <EquationForm placeholder={innerText[0]} textValue={textValue} handleChange={handleChange} />
-  );
+      : (
+        <>
+          <EquationForm displayText={innerText} handleEnterPress={handleEnterPress} onClick={handleButtonClick} handleChange={handleChange} equationValue={equationValue} />
+          {result ? <ResultArea content={content} /> : null}
+        </>
+      ));
 }
 
-function EquationForm({ textValue, handleChange }) {
+function EquationForm({ displayText, handleEnterPress, onClick, handleChange, equationValue }) {
   return (
     <form action="" onSubmit={e => { e.preventDefault(); }}>
-      <div className="text-form">
-        <label htmlFor="equation" />
+      <div className="text-form" data-testid="result">
+        <label htmlFor="equation">{displayText}</label>
         <input
           type="text"
-          placeholder={textValue}
           name="equation"
           className="text-input"
           id="equation"
           ref={input => input && input.focus()}
-          value={textValue}
+          value={equationValue}
           onChange={handleChange}
+          onKeyUp={handleEnterPress}
+          data-testid="inputElement"
         />
+        {Array.isArray(displayText) && <Button onClick={onClick} displayText={displayText} /> }
       </div>
     </form>
+  );
+}
+
+function Button({ onClick, displayText }) {
+  return (
+    <button type="submit" onClick={onClick}>{(Array.isArray(displayText) && displayText[0].split('to ')[1].slice(0, -1))}</button>
+  );
+}
+
+function ResultArea({ content }) {
+  return (
+    <div className={content && 'result-area'}>
+      {(content && !content.includes('error')) ? (
+        <>
+          <p>The result is:</p>
+          <br />
+          <p>
+            <InlineMath
+              math={Array.isArray(content) ? content.join(', ') : content}
+            />
+          </p>
+        </>
+      )
+        : (
+          <p style={{ color: '#FF3131', fontWeight: 'bold' }}>Error: Equation is not well-formed</p>
+        )}
+    </div>
   );
 }
