@@ -1,11 +1,11 @@
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
 
-export default function Text({ innerText, handleEnterClick, handleButtonClick, handleChange, equationValue, content }) {
+export default function Text({ innerText, handleEnterPress, handleButtonClick, handleChange, equationValue, content, result }) {
   return (
     // Display the initialTextState, and a link to help page
     (innerText.length > 1 && Array.isArray(innerText)) ? (
-      <div className="text">
+      <div className="text" data-testid="text">
         {innerText.map((textItem) => <p key={textItem}>{textItem}</p>)}
         <br />
         <p>
@@ -19,16 +19,16 @@ export default function Text({ innerText, handleEnterClick, handleButtonClick, h
     )
       : (
         <>
-          <EquationForm displayText={innerText} handleEnterClick={handleEnterClick} onClick={handleButtonClick} handleChange={handleChange} equationValue={equationValue} />
-          <ResultArea content={content} />
+          <EquationForm displayText={innerText} handleEnterPress={handleEnterPress} onClick={handleButtonClick} handleChange={handleChange} equationValue={equationValue} />
+          {result ? <ResultArea content={content} /> : null}
         </>
       ));
 }
 
-function EquationForm({ displayText, handleEnterClick, onClick, handleChange, equationValue }) {
+function EquationForm({ displayText, handleEnterPress, onClick, handleChange, equationValue }) {
   return (
     <form action="" onSubmit={e => { e.preventDefault(); }}>
-      <div className="text-form">
+      <div className="text-form" data-testid="result">
         <label htmlFor="equation">{displayText}</label>
         <input
           type="text"
@@ -38,7 +38,8 @@ function EquationForm({ displayText, handleEnterClick, onClick, handleChange, eq
           ref={input => input && input.focus()}
           value={equationValue}
           onChange={handleChange}
-          onKeyUp={handleEnterClick}
+          onKeyUp={handleEnterPress}
+          data-testid="inputElement"
         />
         {Array.isArray(displayText) && <Button onClick={onClick} displayText={displayText} /> }
       </div>
@@ -55,13 +56,20 @@ function Button({ onClick, displayText }) {
 function ResultArea({ content }) {
   return (
     <div className={content && 'result-area'}>
-      {content && (
-      <>
-        <p>The result is:</p>
-        <br />
-        <p><InlineMath math={content} /></p>
-      </>
-      )}
+      {(content && !content.includes('error')) ? (
+        <>
+          <p>The result is:</p>
+          <br />
+          <p>
+            <InlineMath
+              math={Array.isArray(content) ? content.join(', ') : content}
+            />
+          </p>
+        </>
+      )
+        : (
+          <p style={{ color: '#FF3131', fontWeight: 'bold' }}>Error: Equation is not well-formed</p>
+        )}
     </div>
   );
 }
