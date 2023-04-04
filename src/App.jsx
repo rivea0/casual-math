@@ -7,10 +7,10 @@ import Footer from './components/Footer';
 export default function App() {
   const initialTextState = ['1. Select an option', '2. Type the equation', '3. Click enter (⏎) to get the result'];
   const [textState, setTextState] = useState(initialTextState);
-  const [equation, setEquation] = useState('');
+  const [equation, setEquation] = useState({ text: '' });
   const [option, setOption] = useState('');
   const [result, setResult] = useState('');
-  const [lockedResultArea, setLockedResultArea] = useState(false);
+  // const [lockedResultArea, setLockedResultArea] = useState(false);
   // For doing the fetching only on updates, not when the component has mounted
   const isInitialMount = useRef(true);
 
@@ -60,33 +60,33 @@ export default function App() {
     }
   }
 
-  function handleEnterClick(e) {
-    setLockedResultArea(true);
+  function handleEnterPress(e) {
+    // setLockedResultArea(true);
     if (e.keyCode === 13) { // if it is the enter key
       if (e.target.value.includes('/')) {
         const cleanRes = e.target.value.replace('/', '(over)');
-        setEquation(cleanRes);
+        setEquation({ text: cleanRes });
       } else {
-        setEquation(e.target.value);
+        setEquation({ text: e.target.value });
       }
     }
   }
 
   function handleButtonClick(e) {
-    setLockedResultArea(true);
+    // setLockedResultArea(true);
     if (e.target.previousElementSibling.value.includes('/')) {
       const cleanRes = e.target.previousElementSibling.value.replace('/', '(over)');
-      setEquation(cleanRes);
+      setEquation({ text: cleanRes });
     } else {
-      setEquation(e.target.previousElementSibling.value);
+      setEquation({ text: e.target.previousElementSibling.value });
     }
   }
 
-  const resultArea = document.createElement('div');
+  // const resultArea = document.createElement('div');
 
   useEffect(() => {
     let ignore = false;
-    const url = `https://newton.now.sh/api/v2/${option}/${encodeURIComponent(equation)}`;
+    const url = `https://newton.now.sh/api/v2/${option}/${encodeURIComponent(equation.text)}`;
     if (isInitialMount.current) {
       isInitialMount.current = false;
     } else {
@@ -95,13 +95,13 @@ export default function App() {
         .then(res => res.json())
         .then(data => {
           if (!ignore) {
-            if (!lockedResultArea) {
-              document.querySelector('.calc-area').appendChild(resultArea);
-              setLockedResultArea(true);
-            }
+          //   if (!lockedResultArea) {
+          //     document.querySelector('.calc-area').appendChild(resultArea);
+          //     setLockedResultArea(true);
+          //   }
             setResult(data.result);
-            resultArea.textContent = result;
-            setLockedResultArea(false);
+          // resultArea.textContent = result;
+          // setLockedResultArea(false);
           }
         })
         .catch(err => console.log(err));
@@ -111,21 +111,22 @@ export default function App() {
     };
   }, [equation]);
 
-  console.log(equation, 'here equation');
+  // console.log(result.includes('error'), 'here result err');
   // console.log(result, 'here result of ', option);
 
   return (
     <div className="App">
       <Header onClick={resetText} />
-      <div className="container">
-        <div id="options">
+      <div className="container" data-testid="container">
+        <div id="options" data-testid="options">
           {
             Object.entries(options).map(([k, val]) => (
               <Option key={val.id} name={val.name} id={k} onClick={handleOptionClick} />))
           }
         </div>
-        <div className="calc-area">
-          <Text innerText={textState} handleEnterClick={handleEnterClick} handleButtonClick={handleButtonClick} handleChange={handleChange} equationValue={equationValue} content={result} optionValue={option} />
+        <div className="calc-area" data-testid="calc-area">
+          <Text innerText={textState} handleEnterPress={handleEnterPress} handleButtonClick={handleButtonClick} handleChange={handleChange} equationValue={equationValue} content={result} result={result} />
+          {/* {result ? <div className="result-area">{result}</div> : null} */}
         </div>
       </div>
       <Footer />
