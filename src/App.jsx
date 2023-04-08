@@ -1,4 +1,6 @@
 import { useEffect, useState, useRef, useReducer } from 'react';
+import Mexp from 'math-expression-evaluator';
+
 import Header from './components/Header';
 import Option from './components/Option';
 import Text from './components/Text';
@@ -116,10 +118,39 @@ export default function App() {
     }
   }
 
+  function isWellFormed(e) {
+    const mexp = new Mexp();
+
+    try {
+      const letters = [...e].filter((letter) => /[a-zA-Z]/.test(letter));
+      if (letters) {
+        const tokens = letters.map((l) => ({
+          type: 3,
+          token: l,
+          show: l,
+          value: l,
+        }));
+        mexp.addToken(tokens);
+      }
+      const lexed = mexp.lex(e);
+      const postfixed = mexp.toPostfix(lexed);
+      mexp.postfixEval(postfixed);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
   // const resultArea = document.createElement('div');
 
   useEffect(() => {
     let ignore = false;
+
+    if (!isWellFormed(state.equation.text)) {
+      setResult('error');
+      return;
+    }
+
     const url = `https://newton.now.sh/api/v2/${state.option}/${encodeURIComponent(state.equation.text)}`;
     if (isInitialMount.current) {
       isInitialMount.current = false;
