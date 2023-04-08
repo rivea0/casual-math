@@ -1,6 +1,5 @@
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
-import { Link } from 'react-router-dom';
 
 export default function Text({
   innerText,
@@ -20,7 +19,7 @@ export default function Text({
         <p>
           See
           {' '}
-          <Link to="/help">help</Link>
+          <a href="/help">help</a>
           {' '}
           for more.
         </p>
