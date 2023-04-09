@@ -15,4 +15,4 @@ Validity of an expression (whether it is well-formed) is checked with the help o
 
 ### An example, using the factor option:
 
-![example gif](./src/assets/casual-math-sc.gif)
+![example gif](./public/casual-math-sc.gif)
