@@ -13,6 +13,6 @@ The result is displayed with KaTeX, using [`react-katex`](https://github.com/tal
 
 Validity of an expression (whether it is well-formed) is checked with the help of [`math-expression-evaluator`](https://github.com/bugwheels94/math-expression-evaluator). Since the expressions can be complex equations, it is hard to do a 100% coverage, but it is sufficient for evaluating simple strings. That said, something like abcd+efg is well-formed, but 123++- is not. In that case, an error message informing the user is displayed. 
 
-### An example, using the factor option:
+### An example usage:
 
 ![example gif](./public/casual-math-sc.gif)
