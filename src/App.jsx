@@ -2,7 +2,7 @@ import { useEffect, useState, useRef, useReducer } from 'react';
 import Mexp from 'math-expression-evaluator';
 
 import Header from './components/Header';
-import Option from './components/Option';
+import Options from './components/Options';
 import Text from './components/Text';
 import Footer from './components/Footer';
 
@@ -56,9 +56,9 @@ export default function App() {
     });
 
     // Add styling to the active option div
-    document.querySelector('.calc-area').style.gridTemplateRows = '1fr 1fr';
+    document.querySelector('.text-area').style.gridTemplateRows = '1fr 1fr';
 
-    for (const opt of document.querySelector('#options').childNodes) {
+    for (const opt of document.querySelector('.options').childNodes) {
       if (opt.id === e.target.id) {
         opt.classList.add('opt-active');
       } else if ([...opt.classList].includes('opt-active')) {
@@ -75,9 +75,9 @@ export default function App() {
     });
 
     // Clear styling
-    document.querySelector('.calc-area').style.gridTemplateRows = '1fr';
+    document.querySelector('.text-area').style.gridTemplateRows = '1fr';
 
-    for (const opt of document.querySelector('#options').childNodes) {
+    for (const opt of document.querySelector('.options').childNodes) {
       if ([...opt.classList].includes('opt-active')) {
         opt.classList.remove('opt-active');
       }
@@ -176,9 +176,6 @@ export default function App() {
     };
   }, [state.equation]);
 
-  // console.log(result.includes('error'), 'here result err');
-  console.log(result, 'here result of ');
-
   return (
     <div className={`App ${theme}`}>
       <Header
@@ -187,13 +184,8 @@ export default function App() {
         color={theme === 'dark' ? '#f1f1f1' : '#4a4e69'}
       />
       <div className="container" data-testid="container">
-        <div id="options" data-testid="options">
-          {
-            Object.entries(options).map(([k, val]) => (
-              <Option key={val.id} name={val.name} id={k} onClick={handleOptionClick} />))
-          }
-        </div>
-        <div className={`calc-area ${theme}`} data-testid="calc-area">
+        <Options options={options} handleOptionClick={handleOptionClick} />
+        <div className={`text-area ${theme}`} data-testid="text-area">
           <Text
             innerText={state.textState}
             handleEnterPress={handleEnterPress}
