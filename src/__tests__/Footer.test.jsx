@@ -18,6 +18,16 @@ describe('Footer', () => {
     screen.getByTestId('github-icon');
   });
 
+  it('displays the mail link', () => {
+    render(<Footer />);
+    screen.getByTestId('mail-link');
+  });
+
+  it('displays the mail icon', () => {
+    render(<Footer />);
+    screen.getByTestId('mail-icon');
+  });
+
   it('displays the text', () => {
     render(<Footer />);
     screen.getByText(`\u00A9 ${new Date().getFullYear()} Eda Eren.`);

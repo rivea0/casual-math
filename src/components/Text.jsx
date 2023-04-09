@@ -1,7 +1,15 @@
 import 'katex/dist/katex.min.css';
 import { InlineMath } from 'react-katex';
 
-export default function Text({ innerText, handleEnterPress, handleButtonClick, handleChange, equationValue, content, result }) {
+export default function Text({
+  innerText,
+  handleEnterPress,
+  handleChange,
+  handleButtonClick,
+  equationValue,
+  content,
+  result,
+}) {
   return (
     // Display the initialTextState, and a link to help page
     (innerText.length > 1 && Array.isArray(innerText)) ? (
@@ -11,7 +19,7 @@ export default function Text({ innerText, handleEnterPress, handleButtonClick, h
         <p>
           See
           {' '}
-          <a href="#">help</a>
+          <a href="/help">help</a>
           {' '}
           for more.
         </p>
@@ -19,13 +27,25 @@ export default function Text({ innerText, handleEnterPress, handleButtonClick, h
     )
       : (
         <>
-          <EquationForm displayText={innerText} handleEnterPress={handleEnterPress} onClick={handleButtonClick} handleChange={handleChange} equationValue={equationValue} />
+          <EquationForm
+            displayText={innerText}
+            handleEnterPress={handleEnterPress}
+            handleChange={handleChange}
+            equationValue={equationValue}
+            handleButtonClick={handleButtonClick}
+          />
           {result ? <ResultArea content={content} /> : null}
         </>
       ));
 }
 
-function EquationForm({ displayText, handleEnterPress, onClick, handleChange, equationValue }) {
+function EquationForm({
+  displayText,
+  handleEnterPress,
+  handleChange,
+  handleButtonClick,
+  equationValue,
+}) {
   return (
     <form action="" onSubmit={e => { e.preventDefault(); }}>
       <div className="text-form" data-testid="result">
@@ -41,15 +61,20 @@ function EquationForm({ displayText, handleEnterPress, onClick, handleChange, eq
           onKeyUp={handleEnterPress}
           data-testid="inputElement"
         />
-        {Array.isArray(displayText) && <Button onClick={onClick} displayText={displayText} /> }
+        {Array.isArray(displayText) && (
+          <Button displayText={displayText} onClick={handleButtonClick} />
+        )}
       </div>
     </form>
   );
 }
 
-function Button({ onClick, displayText }) {
+function Button({ displayText, onClick }) {
   return (
-    <button type="submit" onClick={onClick}>{(Array.isArray(displayText) && displayText[0].split('to ')[1].slice(0, -1))}</button>
+    <button type="submit" onClick={onClick}>
+      {Array.isArray(displayText) && (
+        displayText[0].split('to ')[1].slice(0, -1))}
+    </button>
   );
 }
 
@@ -66,10 +91,11 @@ function ResultArea({ content }) {
             />
           </p>
         </>
-      )
-        : (
-          <p style={{ color: '#FF3131', fontWeight: 'bold' }}>Error: Equation is not well-formed</p>
-        )}
+      ) : (
+        <p style={{ color: '#FF3131', fontWeight: 'bold' }}>
+          Error: Equation is not well-formed
+        </p>
+      )}
     </div>
   );
 }
