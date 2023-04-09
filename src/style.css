@@ -42,7 +42,7 @@ body {
     grid-row-gap: 1rem;
   }
 }
-.dark #options {
+.dark .options {
   background-color: #5F6487;
 }
 .dark .option {
@@ -51,6 +51,28 @@ body {
 .dark .option:hover {
   border-bottom: 1px solid #c9ada7;
   cursor: pointer;
+}
+.dark .site-name {
+  color: #c9ada7;
+}
+.dark .text,
+.dark .text-form {
+  background-color: rgba(113, 125, 155, 0.3);
+  color: rgba(255, 255, 255, 0.7);
+}
+.dark button[type="submit"] {
+  background-color: #4a4e69;
+  border: 1px solid #c9ada7;
+  color: #c9ada7;
+}
+.dark .text-input {
+  color: #ffffff;
+}
+.dark a[href] {
+  color: #c9ada7;
+}
+.dark .result-area > p:first-child {
+  color: rgba(255, 255, 255, 0.7);
 }
 .light {
   display: grid;
@@ -65,7 +87,7 @@ body {
     grid-row-gap: 1rem;
   }
 }
-.light #options {
+.light .options {
   background-color: #E1E2E7;
 }
 .light .option {
@@ -75,7 +97,7 @@ body {
   border-bottom: 1px solid #c9ada7;
   cursor: pointer;
 }
-.light #site-name,
+.light .site-name,
 .light a[href],
 .light p {
   color: #4a4e69;
@@ -101,7 +123,7 @@ body {
   display: flex;
   font-family: 'Montserrat', sans-serif;
   align-items: center;
-  padding: 12px;
+  padding: 18px;
 }
 @media (max-width: 600px) {
   .header {
@@ -112,10 +134,9 @@ body {
 .header > h1:hover {
   cursor: pointer;
 }
-#site-name {
+.site-name {
   font-size: 1.5rem;
-  color: #c9ada7;
-  margin: 0.75rem 0.25rem;
+  margin: 0.75rem 0.5rem;
 }
 .container {
   display: grid;
@@ -129,7 +150,7 @@ body {
     grid-row-gap: 2rem;
   }
 }
-#options {
+.options {
   display: grid;
   font-weight: 200;
 }
@@ -140,16 +161,14 @@ body {
 .opt-active {
   border-bottom: 1px solid #c9ada7;
 }
-.calc-area {
+.text-area {
   display: grid;
   grid-row-gap: 2rem;
   grid-template-rows: 1fr;
 }
 .text,
 .text-form {
-  background-color: rgba(113, 125, 155, 0.3);
   height: 100%;
-  color: rgba(255, 255, 255, 0.7);
   display: flex;
   flex-flow: column wrap;
   align-content: center;
@@ -178,9 +197,6 @@ button[type="submit"] {
   padding: 12px 20px;
   margin-top: 1rem;
   margin-bottom: 1rem;
-  background-color: #4a4e69;
-  border: 1px solid #c9ada7;
-  color: #c9ada7;
   border-radius: 4px;
   font-weight: bold;
   font-size: 1rem;
@@ -188,7 +204,6 @@ button[type="submit"] {
 .text-input {
   background-color: inherit;
   border: none;
-  color: #ffffff;
   font-size: 2rem;
   width: 100%;
   box-sizing: border-box;
@@ -202,16 +217,10 @@ button[type="submit"] {
 .text-form {
   padding: 0 2rem;
 }
-a[href] {
-  color: #c9ada7;
-}
 .result-area {
   padding: 2rem 0 0 2rem;
   font-size: 1.75rem;
   border-left: 2px solid #c9ada7;
-}
-.result-area > p:first-child {
-  color: rgba(255, 255, 255, 0.7);
 }
 button:hover {
   cursor: pointer;
@@ -256,4 +265,14 @@ button:hover {
 .darkModeBtn {
   background: none;
   border: none;
+}
+.help-div {
+  font-size: 1.5rem;
+  line-height: 1.3;
+  padding: 0 12rem 0 1rem;
+}
+@media (max-width: 600px) {
+  .help-div {
+    padding: 0;
+  }
 }
