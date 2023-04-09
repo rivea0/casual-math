@@ -20,7 +20,7 @@ export default function Help() {
         <div className="help-div">
           <h1>Using Casual Math</h1>
           <div style={{ paddingTop: '2rem' }}>
-            <p>{'To solve a problem, choose one of the operations on the left sidebar, that is Simplify, Factor, Derive, Integrate, and Find 0\'s.'}</p>
+            <p>{'To solve a problem, choose one of the operations on the left sidebar, that is one of Simplify, Factor, Derive, Integrate, or Find 0\'s.'}</p>
             <p>Type the math expression into the input field. You can either press the enter key on your keyboard, or click the button under the input field to get the result.</p>
           </div>
           <div style={{ paddingTop: '2rem' }}>
@@ -32,7 +32,7 @@ export default function Help() {
               {' '}
               <code>abcd+efgh</code>
               {' '}
-              is still consider well-formed, so you might still get a result.
+              is still considered well-formed, so you might still get a result.
             </p>
           </div>
         </div>
