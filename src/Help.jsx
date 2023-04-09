@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Header from './components/Header';
+import Footer from './components/Footer';
 // const theme = useContext(ThemeContext);
 // const [themeHelp, setThemeHelp] = useState('dark');
 
@@ -37,6 +38,7 @@ export default function Help() {
           </div>
         </div>
       </div>
+      <Footer color={th.theme === 'dark' ? '#f1f1f1' : '#4a4e69'} />
     </div>
   );
 }
