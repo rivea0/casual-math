@@ -28,7 +28,7 @@ describe('App', () => {
     render(<App />);
     screen.getByTestId('container');
     screen.getByTestId('options');
-    screen.getByTestId('calc-area');
+    screen.getByTestId('text-area');
   });
 
   it('gets correct result after simplify option enter press', async () => {
