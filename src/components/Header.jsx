@@ -5,7 +5,7 @@ export default function Header({ onClick, toggleTheme, color }) {
     <div className="header">
       <img src="/teacup.png" alt="logo" width="50px" height="38px" />
       {/* <Link to="/" style={{ textDecoration: 'none' }}> */}
-      <a href="/" style={{ textDecoration: 'none' }}>
+      <a href="/" style={{ textDecoration: 'none' }} onClick={(e) => e.preventDefault()}>
         <h1 className="site-name" onClick={onClick}>Casual Math</h1>
       </a>
       {/* </Link> */}
