@@ -98,7 +98,6 @@ export default function App() {
   }
 
   function handleEnterPress(e) {
-    // setLockedResultArea(true);
     if (e.keyCode === 13) { // If it is the enter key
       if (e.target.value.includes('/')) {
         const cleanRes = e.target.value.replace('/', '(over)');
@@ -116,7 +115,6 @@ export default function App() {
   }
 
   function handleButtonClick(e) {
-    // setLockedResultArea(true);
     if (e.target.previousElementSibling.value.includes('/')) {
       const cleanRes = e.target.previousElementSibling.value.replace('/', '(over)');
       dispatch({
@@ -154,8 +152,6 @@ export default function App() {
     }
   }
 
-  // const resultArea = document.createElement('div');
-
   useEffect(() => {
     let ignore = false;
 
@@ -173,13 +169,7 @@ export default function App() {
         .then(res => res.json())
         .then(data => {
           if (!ignore) {
-          //   if (!lockedResultArea) {
-          //     document.querySelector('.calc-area').appendChild(resultArea);
-          //     setLockedResultArea(true);
-          //   }
             setResult(data.result);
-          // resultArea.textContent = result;
-          // setLockedResultArea(false);
           }
         })
         .catch(err => console.log(err));
