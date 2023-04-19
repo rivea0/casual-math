@@ -30,7 +30,7 @@ describe('Text', () => {
   it('displays the input element on simplify option click', async () => {
     render(<App />);
     const user = userEvent.setup();
-    const simplify = screen.getByText(/Simplify/);
+    const simplify = screen.getByText(/Simplify/, { ignore: 'script, style, b' });
     await user.click(simplify);
     screen.getByLabelText(/Type equation to simplify:/, { selector: 'input' });
   });
@@ -38,7 +38,7 @@ describe('Text', () => {
   it('displays the input element on factor option click', async () => {
     render(<App />);
     const user = userEvent.setup();
-    const factor = screen.getByText(/Factor/);
+    const factor = screen.getByText(/Factor/, { ignore: 'script, style, b' });
     await user.click(factor);
     screen.getByLabelText(/Type equation to factor:/, { selector: 'input' });
   });
@@ -46,7 +46,7 @@ describe('Text', () => {
   it('displays the input element on derive option click', async () => {
     render(<App />);
     const user = userEvent.setup();
-    const derive = screen.getByText(/Derive/);
+    const derive = screen.getByText(/Derive/, { ignore: 'script, style, b' });
     await user.click(derive);
     screen.getByLabelText(/Type equation to derive:/, { selector: 'input' });
   });
@@ -54,14 +54,14 @@ describe('Text', () => {
   it('displays the input element on integrate option click', async () => {
     render(<App />);
     const user = userEvent.setup();
-    const integrate = screen.getByText(/Integrate/);
+    const integrate = screen.getByText(/Integrate/, { ignore: 'script, style, b' });
     await user.click(integrate);
     screen.getByLabelText(/Type equation to integrate:/, { selector: 'input' });
   });
 
   it('displays the input element on zeroes option click', async () => {
     render(<App />);
-    const zeroes = screen.getByText(/Find 0's/);
+    const zeroes = screen.getByText(/Find 0's/, { ignore: 'script, style, b' });
     await userEvent.click(zeroes);
     screen.getByLabelText(/Type equation to find 0's:/);
   });
