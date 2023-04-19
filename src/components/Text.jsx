@@ -6,6 +6,7 @@ export default function Text({
   handleEnterPress,
   handleChange,
   handleButtonClick,
+  handleHelpClick,
   equationValue,
   content,
   result,
@@ -19,7 +20,7 @@ export default function Text({
         <p>
           See
           {' '}
-          <a href="/help">help</a>
+          <a href="#help" onClick={handleHelpClick}>help</a>
           {' '}
           for more.
         </p>

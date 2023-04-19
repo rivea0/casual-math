@@ -31,7 +31,7 @@ body {
 }
 .dark {
   display: grid;
-  grid-template-rows: 1fr 5fr 1fr;
+  grid-template-rows: 1fr 5fr;
   grid-row-gap: 2rem;
   background-color: #4a4e69;
   color: #ffffff;
@@ -76,7 +76,7 @@ body {
 }
 .light {
   display: grid;
-  grid-template-rows: 1fr 5fr 1fr;
+  grid-template-rows: 1fr 5fr;
   grid-row-gap: 2rem;
   background-color: #DADBE1;
   color: #4a4e69;

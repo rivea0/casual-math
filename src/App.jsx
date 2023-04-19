@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useReducer } from 'react';
 import Mexp from 'math-expression-evaluator';
 
+import Help from './Help';
 import Header from './components/Header';
 import Options from './components/Options';
 import Text from './components/Text';
@@ -25,6 +26,18 @@ export default function App() {
   const [result, setResult] = useState('');
   const [state, dispatch] = useReducer(reducer, initialState);
   const isInitialMount = useRef(true);
+  const helpRef = useRef(null);
+  const mainRef = useRef(null);
+
+  function handleHelpClick(e) {
+    e.preventDefault();
+    helpRef.current.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function handleToTopClick(e) {
+    e.preventDefault();
+    mainRef.current.scrollIntoView({ behavior: 'smooth' });
+  }
 
   function handleChange(e) {
     dispatch({
@@ -177,7 +190,7 @@ export default function App() {
   }, [state.equation]);
 
   return (
-    <div className={`App ${theme}`}>
+    <div className={`App ${theme}`} ref={mainRef}>
       <Header
         onClick={resetText}
         toggleTheme={toggleTheme}
@@ -191,12 +204,15 @@ export default function App() {
             handleEnterPress={handleEnterPress}
             handleChange={handleChange}
             handleButtonClick={handleButtonClick}
+            handleHelpClick={handleHelpClick}
+            helpRef={helpRef}
             equationValue={state.equationValue}
             content={result}
             result={result}
           />
         </div>
       </div>
+      <Help helpRef={helpRef} handleToTopClick={handleToTopClick} />
       <Footer color={theme === 'dark' ? '#f1f1f1' : '#4a4e69'} />
     </div>
   );
