@@ -29,14 +29,14 @@ export default function Help({ helpRef, handleToTopClick }) {
           <p style={{ marginBottom: '1rem' }}>
             Note that if the expression is not well-formed, you might get an error
             {' '}
-            <code style={{ color: '#FF4433' }}>Error: Equation is not well-formed</code>
+            <code style={{ color: '#FA8072' }}>Error: Equation is not well-formed</code>
             . However, since Casual Math takes advantage of symbolic parsing, an expression like
             {' '}
             <code>abcd+efgh</code>
             {' '}
             is still considered well-formed, so you might still get a result.
           </p>
-          <a href="#" onClick={handleToTopClick} style={{ fontSize: '22px' }}>Back to Top</a>
+          <a href="#" onClick={handleToTopClick} style={{ fontSize: 'medium' }}>Back to Top</a>
         </div>
       </div>
     </div>
